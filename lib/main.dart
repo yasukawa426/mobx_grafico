@@ -40,32 +40,39 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-                // child: Row(
-                //   mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //   Card(child: SfCartesianChart(
-                //     primaryXAxis: CategoryAxis(),
-                //     series: <LineSeries<int, String>>[
-                //       LineSeries<int, String>(
-                //         dataSource: <int>[
-                //           4,5,6,10,78,2,55,64,32,86,10
-                //         ],
-                //         xValueMapper: (um, dois) => "$um indice",
-                //         yValueMapper: (um, dois) => um
-                //       )
-                //     ],
-                //   )),
-                //   Card(child: SfCircularChart ()),
-                //   ],)
-           TextField(
-            decoration: InputDecoration(labelText: 'Nome'),
-           ),
-           SizedBox(height: 20,),
-           TextField(
-            decoration: InputDecoration(labelText: 'Sobrenome'),
-           ),
-           SizedBox(height: 20),
-           Text('Nome Completo'),
+            // child: Row(
+            //   mainAxisAlignment: MainAxisAlignment.center,
+            //   children: [
+            //   Card(child: SfCartesianChart(
+            //     primaryXAxis: CategoryAxis(),
+            //     series: <LineSeries<int, String>>[
+            //       LineSeries<int, String>(
+            //         dataSource: <int>[
+            //           4,5,6,10,78,2,55,64,32,86,10
+            //         ],
+            //         xValueMapper: (um, dois) => "$um indice",
+            //         yValueMapper: (um, dois) => um
+            //       )
+            //     ],
+            //   )),
+            //   Card(child: SfCircularChart ()),
+            //   ],)
+            TextField(
+              decoration: InputDecoration(labelText: 'Nome'),
+              onChanged: controller.mudarNome,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            TextField(
+                decoration: InputDecoration(labelText: 'Sobrenome'),
+                onChanged: controller.mudarSobrenome),
+            SizedBox(height: 20),
+            Observer(
+              builder: (context) {
+                return Text('Nome Completo: ${controller.nome} ${controller.sobrenome}');
+              },
+            )
           ],
         ),
       ),
