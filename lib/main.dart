@@ -70,7 +70,7 @@ class MyHomePage extends StatelessWidget {
             SizedBox(height: 20),
             Observer(
               builder: (context) {
-                return Text('Nome Completo: ${controller.nome} ${controller.sobrenome}');
+                return Text('Nome Completo: ${controller.nomeCompleto}');
               },
             )
           ],
