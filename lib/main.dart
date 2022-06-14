@@ -58,16 +58,16 @@ class MyHomePage extends StatelessWidget {
             //   Card(child: SfCircularChart ()),
             //   ],)
             TextField(
-              decoration: InputDecoration(labelText: 'Nome'),
+              decoration: const InputDecoration(labelText: 'Nome'),
               onChanged: controller.mudarNome,
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             TextField(
-                decoration: InputDecoration(labelText: 'Sobrenome'),
+                decoration: const InputDecoration(labelText: 'Sobrenome'),
                 onChanged: controller.mudarSobrenome),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Observer(
               builder: (context) {
                 return Text('Nome Completo: ${controller.nomeCompleto}');
