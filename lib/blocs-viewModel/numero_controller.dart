@@ -10,6 +10,6 @@ abstract class NumeroControllerBase with Store {
   late NumeroModel model;
 
   gerarNumeros() {
-    GeradorNumero.gerarNumero();
+    print(GeradorNumero.gerarNumero());
   }
 }
