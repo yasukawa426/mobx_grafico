@@ -13,63 +13,47 @@ class AndroidApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key, required this.title}) : super(key: key);
-  final String title;
-  Controller controller = Controller();
+class MyHomePage extends StatefulWidget {
+  const MyHomePage({Key? key}) : super(key: key);
 
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(title),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      appBar: AppBar(title: const Text("Gráfico")),
+      body: Column(children: [
+        const SizedBox(height: 5),
+        const Center(
+            child: Text(
+                "Clique no botão para gerar o seu primeiro conjunto de números. Clique novamente para gerar um novo conjunto.")),
+        const SizedBox(height: 5),
+        ElevatedButton(
+            onPressed: () {
+              //TODO: implement
+            },
+            child: const Text("Gerar números")),
+        Row(
           children: [
-            // child: Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //   Card(child: SfCartesianChart(
-            //     primaryXAxis: CategoryAxis(),
-            //     series: <LineSeries<int, String>>[
-            //       LineSeries<int, String>(
-            //         dataSource: <int>[
-            //           4,5,6,10,78,2,55,64,32,86,10
-            //         ],
-            //         xValueMapper: (um, dois) => "$um indice",
-            //         yValueMapper: (um, dois) => um
-            //       )
-            //     ],
-            //   )),
-            //   Card(child: SfCircularChart ()),
-            //   ],)
-            TextField(
-              decoration: const InputDecoration(labelText: 'Nome'),
-              onChanged: controller.mudarNome,
-            ),
-            const SizedBox(
+            Card(
+                child: Container(
               height: 20,
-            ),
-            TextField(
-                decoration: const InputDecoration(labelText: 'Sobrenome'),
-                onChanged: controller.mudarSobrenome),
-            const SizedBox(height: 20),
-            Observer(
-              builder: (context) {
-                return Text('Nome Completo: ${controller.nomeCompleto}');
-              },
-            )
+            )),
+            Card(
+                child: Container(
+              height: 20,
+            )),
           ],
-        ),
-      ),
+        )
+      ]),
     );
   }
 }
