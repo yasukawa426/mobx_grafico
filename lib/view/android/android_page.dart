@@ -42,7 +42,9 @@ class _MyHomePageState extends State<MyHomePage> {
         const SizedBox(height: 5),
         ElevatedButton(
             onPressed: () {
+              setState(() {        
               controller.generateNumbers();
+              });
             },
             child: const Text("Gerar números")),
         Row(
@@ -56,12 +58,12 @@ class _MyHomePageState extends State<MyHomePage> {
                       series: <LineSeries>[
                         LineSeries<NumberModel, int>(
                           dataSource: controller.modelList,
-                          xValueMapper: (NumberModel valor, _) => valor.years,
-                          yValueMapper: (NumberModel valor, _) => valor.numbers
+                          xValueMapper: (NumberModel valor, _) => valor.year,
+                          yValueMapper: (NumberModel valor, _) => valor.number
                         ),
                       ]
                     ),
-                    Text("${controller.modelList[0].numbers}")
+                    Text("${controller.modelList[0].number}")
                   ],
                 );
               },
@@ -69,8 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
             Card(child: Observer(
               builder: (context) {
                 return Column(children: [
-                  Text("${controller.modelList[0].numbers}"),
-                  Text("${controller.modelList[0].years}"),
+                  Text("${controller.modelList[0].number}"),
+                  Text("${controller.modelList[0].year}"),
                 ]);
               },
             )),
@@ -78,13 +80,5 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ]),
     );
-  }
-
-  funcao() {
-    if (controller.modelList.isEmpty) {
-      return const Text("Vazio");
-    } else {
-      return Text("${controller.modelList[0].numbers}");
-    }
   }
 }
