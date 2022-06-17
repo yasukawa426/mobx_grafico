@@ -15,7 +15,8 @@ abstract class NumberControllerBase with Store {
   ///Chama a API [NumberGenerator] para gerar uma lista de números, então, popula a instância da model com a lista
   @action
   generateNumbers() {
-    var numbers = NumberGenerator.generateNumbers(20);
-    model = NumberModel(numbers);
+    var randomNumbers = NumberGenerator.generateNumbers(20);
+    //é necessario criar uma nova instancia do objeto para o mobx notificar a interface
+    model = NumberModel(randomNumbers);
   }
 }
