@@ -42,8 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
         const SizedBox(height: 5),
         ElevatedButton(
             onPressed: () {
-              setState(() {        
-              controller.generateNumbers();
+              setState(() {
+                controller.generateNumbers();
               });
             },
             child: const Text("Gerar números")),
@@ -54,15 +54,18 @@ class _MyHomePageState extends State<MyHomePage> {
                 return Column(
                   children: [
                     SfCartesianChart(
-                      //primaryXAxis: Axis,
-                      series: <LineSeries>[
-                        LineSeries<NumberModel, int>(
-                          dataSource: controller.modelList,
-                          xValueMapper: (NumberModel valor, _) => valor.year,
-                          yValueMapper: (NumberModel valor, _) => valor.number
-                        ),
-                      ]
-                    ),
+
+                        //primaryXAxis: Axis,
+                        title: ChartTitle(text: 'Número por Ano'),
+                        tooltipBehavior: TooltipBehavior(enable: true),
+                        series: <LineSeries>[
+                          LineSeries<NumberModel, int>(
+                              dataSource: controller.modelList,
+                              xValueMapper: (NumberModel valor, _) =>
+                                  valor.year,
+                              yValueMapper: (NumberModel valor, _) =>
+                                  valor.number),
+                        ]),
                     Text("${controller.modelList[0].number}")
                   ],
                 );
