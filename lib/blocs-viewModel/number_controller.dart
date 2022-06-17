@@ -19,7 +19,7 @@ abstract class NumberControllerBase with Store {
   void generateNumbers({amount = 20}) {
     List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
     List<int> randomYears =
-        NumberGenerator.generateNumbers(amount, min: 2000, max: 30);
+        NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
     ///esvazia a lista
     modelList.clear();
 
