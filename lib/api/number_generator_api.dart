@@ -8,14 +8,16 @@ import 'dart:math';
 ///Essa classe é responsável por gerar números aleátorios
 class NumberGenerator {
   ///Método estático que gera uma lista populada com números aleátorios. 
-  ///[amount] é a quantidade de números à serem gerados.
-  static List<int> generateNumbers(int amount) {
+  ///[amount] é a quantidade de números à serem gerados. 
+  ///[min] se refere ao valor minimo dos números gerados, com valor padrão de "0" (Apenas positivo. Inclusivo).
+  ///[max] se refere ao valor máximo do numero gerado, com valor padrão de "100".
+  static List<int> generateNumbers(int amount, {int min = 0, int max = 100}) {
     List<int> numbers = List.generate(
       amount,
       growable: false,
       (index) {
         var random = Random();
-        return random.nextInt(100);
+        return random.nextInt(max) + min;
       },
     );
 
