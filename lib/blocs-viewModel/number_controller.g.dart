@@ -29,7 +29,7 @@ mixin _$NumberController on NumberControllerBase, Store {
       ActionController(name: 'NumberControllerBase', context: context);
 
   @override
-  dynamic generateNumbers({dynamic amount = 20}) {
+  void generateNumbers({dynamic amount = 20}) {
     final _$actionInfo = _$NumberControllerBaseActionController.startAction(
         name: 'NumberControllerBase.generateNumbers');
     try {
