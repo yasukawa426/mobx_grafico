@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobx_exemplo_grafico/blocs-viewModel/controller.dart';
 import 'package:mobx_exemplo_grafico/blocs-viewModel/number_controller.dart';
+import 'package:mobx_exemplo_grafico/model/number_model.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
 
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
@@ -48,17 +49,28 @@ class _MyHomePageState extends State<MyHomePage> {
           children: [
             Card(child: Observer(
               builder: (context) {
-                return Column(children: [
-                  Text("${controller.model.numbers}"),
-                  Text("${controller.model.years}"),
-                ]);
+                return Column(
+                  children: [
+                    SfCartesianChart(
+                      //primaryXAxis: Axis,
+                      series: <LineSeries>[
+                        LineSeries<NumberModel, int>(
+                          dataSource: controller.modelList,
+                          xValueMapper: (NumberModel valor, _) => valor.years,
+                          yValueMapper: (NumberModel valor, _) => valor.numbers
+                        ),
+                      ]
+                    ),
+                    Text("${controller.modelList[0].numbers}")
+                  ],
+                );
               },
             )),
             Card(child: Observer(
               builder: (context) {
                 return Column(children: [
-                  Text("${controller.model.numbers}"),
-                  Text("${controller.model.years}"),
+                  Text("${controller.modelList[0].numbers}"),
+                  Text("${controller.modelList[0].years}"),
                 ]);
               },
             )),
@@ -66,5 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
         )
       ]),
     );
+  }
+
+  funcao() {
+    if (controller.modelList.isEmpty) {
+      return const Text("Vazio");
+    } else {
+      return Text("${controller.modelList[0].numbers}");
+    }
   }
 }
