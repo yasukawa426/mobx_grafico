@@ -17,7 +17,7 @@ abstract class NumberControllerBase with Store {
   @action
   void generateNumbers({amount=20}) {
     List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
-    List<int> randomYears = NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
+    List<int> randomYears = NumberGenerator.generateNumbers(amount, min: 2000, max: 30);
     ///é necessario criar uma nova instancia do objeto para o mobx notificar a interface
     model = NumberModel(randomNumbers, randomYears);
   }

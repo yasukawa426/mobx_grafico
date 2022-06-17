@@ -46,15 +46,22 @@ class _MyHomePageState extends State<MyHomePage> {
             child: const Text("Gerar números")),
         Row(
           children: [
-            Card(
-                child: Observer(builder: (context) {
-                  return Text("${controller.model.numbers}");
-                },)
-            ),
-            Card(
-                child: Observer(builder: (context) {
-                  return Text("${controller.model.numbers}");
-                },)),
+            Card(child: Observer(
+              builder: (context) {
+                return Column(children: [
+                  Text("${controller.model.numbers}"),
+                  Text("${controller.model.years}"),
+                ]);
+              },
+            )),
+            Card(child: Observer(
+              builder: (context) {
+                return Column(children: [
+                  Text("${controller.model.numbers}"),
+                  Text("${controller.model.years}"),
+                ]);
+              },
+            )),
           ],
         )
       ]),
