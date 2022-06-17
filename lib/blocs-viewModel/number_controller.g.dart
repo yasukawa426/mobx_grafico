@@ -25,6 +25,20 @@ mixin _$NumberController on NumberControllerBase, Store {
     });
   }
 
+  late final _$NumberControllerBaseActionController =
+      ActionController(name: 'NumberControllerBase', context: context);
+
+  @override
+  dynamic generateNumbers() {
+    final _$actionInfo = _$NumberControllerBaseActionController.startAction(
+        name: 'NumberControllerBase.generateNumbers');
+    try {
+      return super.generateNumbers();
+    } finally {
+      _$NumberControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

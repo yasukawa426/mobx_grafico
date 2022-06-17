@@ -3,10 +3,15 @@ import 'dart:math';
 
 // import 'package:http/http.dart' as http;
 
+///Geradora de números aleatórios
+///
+///Essa classe é responsável por gerar números aleátorios
 class NumberGenerator {
-  static generateNumbers(int lenght) {
+  ///Método estático que gera uma lista populada com números aleátorios. 
+  ///[amount] é a quantidade de números à serem gerados.
+  static List<int> generateNumbers(int amount) {
     List<int> numbers = List.generate(
-      20,
+      amount,
       growable: false,
       (index) {
         var random = Random();
