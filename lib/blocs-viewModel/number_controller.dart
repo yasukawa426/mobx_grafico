@@ -8,15 +8,14 @@ class NumberController = NumberControllerBase with _$NumberController;
 
 ///Essa classe faz o controlle dos valores que aparece no gráfico e no relatório.
 abstract class NumberControllerBase with Store {
-  ///Instância da model
+  ///Instância da model criada com uma lista de números vazia.
   @observable
-  late NumberModel model;
+  NumberModel model = NumberModel(List.empty());
 
   ///Chama a API [NumberGenerator] para gerar uma lista de números, então, popula a instância da model com a lista
   @action
   generateNumbers() {
     var numbers = NumberGenerator.generateNumbers(20);
     model = NumberModel(numbers);
-    
   }
 }

@@ -47,13 +47,14 @@ class _MyHomePageState extends State<MyHomePage> {
         Row(
           children: [
             Card(
-                child: Container(
-              height: 20,
-            )),
+                child: Observer(builder: (context) {
+                  return Text("${controller.model.numbers}");
+                },)
+            ),
             Card(
-                child: Container(
-              height: 20,
-            )),
+                child: Observer(builder: (context) {
+                  return Text("${controller.model.numbers}");
+                },)),
           ],
         )
       ]),
