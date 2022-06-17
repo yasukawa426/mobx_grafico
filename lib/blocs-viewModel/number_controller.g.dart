@@ -29,11 +29,11 @@ mixin _$NumberController on NumberControllerBase, Store {
       ActionController(name: 'NumberControllerBase', context: context);
 
   @override
-  dynamic generateNumbers() {
+  dynamic generateNumbers({dynamic amount = 20}) {
     final _$actionInfo = _$NumberControllerBaseActionController.startAction(
         name: 'NumberControllerBase.generateNumbers');
     try {
-      return super.generateNumbers();
+      return super.generateNumbers(amount: amount);
     } finally {
       _$NumberControllerBaseActionController.endAction(_$actionInfo);
     }

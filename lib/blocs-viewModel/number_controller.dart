@@ -10,13 +10,15 @@ class NumberController = NumberControllerBase with _$NumberController;
 abstract class NumberControllerBase with Store {
   ///Instância da model criada com uma lista de números vazia.
   @observable
-  NumberModel model = NumberModel(List.empty());
+  NumberModel model = NumberModel(List.empty(), List.empty());
 
-  ///Chama a API [NumberGenerator] para gerar uma lista de números, então, popula a instância da model com a lista
+  ///Chama a API [NumberGenerator] para gerar um par de lista de números, então, popula a instância da model com ela.
+  ///[amount] se trata da quantidade de números em cada lista, com valor padrão de 20
   @action
-  generateNumbers() {
-    var randomNumbers = NumberGenerator.generateNumbers(20);
+  generateNumbers({amount=20}) {
+    var randomNumbers = NumberGenerator.generateNumbers(amount);
+    var randomYears = NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
     //é necessario criar uma nova instancia do objeto para o mobx notificar a interface
-    model = NumberModel(randomNumbers);
+    model = NumberModel(randomNumbers, randomYears);
   }
 }
