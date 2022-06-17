@@ -1,9 +1,9 @@
-///Model dos valores usados para o gráfico
+///Model dos valores usados para o gráfico.
 class NumberModel {
-  ///Conjunto de números aleatórios usados para preencher o gráfico
-  final List<int> numbers;
-  ///Conjunto de números aleatórios que imitam anos
-  final List<int> years;
+  ///Número que representa um valor aleatório.
+  final int number;
+  ///Número que representa um ano aleatório.
+  final int year;
 
-  NumberModel(this.numbers, this.years);
+  NumberModel(this.number, this.year);
 }
