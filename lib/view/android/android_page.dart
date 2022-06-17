@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx_exemplo_grafico/blocs-viewModel/controller.dart';
-import 'package:mobx_exemplo_grafico/blocs-viewModel/numero_controller.dart';
+import 'package:mobx_exemplo_grafico/blocs-viewModel/number_controller.dart';
 
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  NumeroController controller = NumeroController();
+  NumberController controller = NumberController();
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         const SizedBox(height: 5),
         ElevatedButton(
             onPressed: () {
-              controller.gerarNumeros();
+              controller.generateNumbers();
             },
             child: const Text("Gerar números")),
         Row(
