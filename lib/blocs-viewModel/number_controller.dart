@@ -8,10 +8,10 @@ class NumberController = NumberControllerBase with _$NumberController;
 
 ///Essa classe faz o controlle dos valores que aparecem no gráfico e no relatório.
 abstract class NumberControllerBase with Store {
-
   ///Lista Observavel de NumberModel. Começa vazia, depois é preenchida com o método [generateNumbers].
   @observable
-  ObservableList<NumberModel> modelList = ObservableList<NumberModel>.of([NumberModel(0,0)]);
+  ObservableList<NumberModel> modelList =
+      ObservableList<NumberModel>.of([NumberModel(0, 0)]);
 
   ///Chama a API [NumberGenerator] para gerar um par de lista de números, então, popula a instância da model com ela.\
   ///[amount] se trata da quantidade de números em cada lista, com valor padrão de 20.
@@ -20,6 +20,9 @@ abstract class NumberControllerBase with Store {
     List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
     List<int> randomYears =
         NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
+    ///ordena a lista
+    randomYears.sort();
+
     ///esvazia a lista
     modelList.clear();
 
