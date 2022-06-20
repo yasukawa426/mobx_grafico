@@ -5,6 +5,7 @@ import 'package:mobx_exemplo_grafico/blocs-viewModel/number_controller.dart';
 import 'package:mobx_exemplo_grafico/model/number_model.dart';
 
 void main() {
+  //Esse grupo de testes testa a variavel [showSeries] e o método [changeShowSeries()]
   group("showSeries", () {
     NumberController controller = NumberController();
 
@@ -25,6 +26,7 @@ void main() {
     });
   });
 
+  //Testa o gerador de numeros.
   test("Gerador de número", () {
     NumberController controller = NumberController();
     Random rng = Random();
