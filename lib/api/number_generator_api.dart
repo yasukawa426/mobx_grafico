@@ -21,6 +21,9 @@ class NumberGenerator {
         return min + random.nextInt(max - min);
       },
     );
+    return numbers;
+
+
 
     // var url = "https://csrng.net/csrng/csrng.php?max=100";
     // var uri = Uri.parse(url);
@@ -30,6 +33,5 @@ class NumberGenerator {
     // var json = jsonDecode(resposta.body);
     // var numeroAleatorio = json[0]["random"];
     // print("random: $numeroAleatorio");
-    return numbers;
   }
 }
