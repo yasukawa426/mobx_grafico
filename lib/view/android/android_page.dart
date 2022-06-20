@@ -62,8 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 //   controller.generateNumbers();
                 // });
                 controller.generateNumbers(modelQty: seriesQty);
-                controller.changeShowSeries(!controller.showSeries);
-                controller.changeShowSeries(!controller.showSeries);
               },
               child: const Text("Gerar números")),
           StaggeredGrid.count(
