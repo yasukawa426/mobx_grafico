@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:mobx_exemplo_grafico/blocs-viewModel/number_controller.dart';
@@ -6,6 +9,10 @@ import 'package:mobx_exemplo_grafico/model/number_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:data_table_2/data_table_2.dart';
 
+///Tela principal da aplicação.
+///
+///Mostra um gráfico e um relatório, com a opção de gerar números aleátorios para preenche-los. No gráfico também
+///é possível escolher entre mostrar multiplas séries ou não.
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
 
@@ -31,6 +38,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   NumberController controller = NumberController();
+  var rng = Random();
 
   @override
   Widget build(BuildContext context) {
@@ -44,10 +52,14 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Clique no botão para gerar o seu primeiro conjunto de números. Clique novamente para gerar um novo conjunto.")),
           const SizedBox(height: 5),
           ElevatedButton(
+              ///Gera os números para preencher os gráficos.
               onPressed: () {
-                setState(() {
-                  controller.generateNumbers();
-                });
+                // setState(() {
+                //   controller.generateNumbers();
+                // });
+                controller.generateNumbers();
+                controller.changeShowSeries(!controller.showSeries);
+                controller.changeShowSeries(!controller.showSeries);
               },
               child: const Text("Gerar números")),
           StaggeredGrid.count(
@@ -64,19 +76,79 @@ class _MyHomePageState extends State<MyHomePage> {
                       builder: (context) {
                         return Column(
                           children: [
-                            SfCartesianChart(
-                                //primaryXAxis: Axis,
-                                title: ChartTitle(text: 'Número por Ano'),
-                                tooltipBehavior: TooltipBehavior(enable: true),
-                                series: <LineSeries>[
-                                  LineSeries<NumberModel, int>(
-                                      dataSource: controller.modelList,
-                                      xValueMapper: (NumberModel valor, _) =>
-                                          valor.year,
-                                      yValueMapper: (NumberModel valor, _) =>
-                                          valor.number),
-                                ]),
-                            Text("${controller.modelList[0].number}")
+                            Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 15.0, right: 15.0),
+                                child: SwitchListTile(
+                                  title: const Text("Mostrar múltiplas séries"),
+                                  onChanged: (bool value) {
+                                    controller.changeShowSeries(value);
+                                  },
+                                  value: controller.showSeries,
+                                )
+                                // TextField(
+                                //   onSubmitted: (text) {},
+                                //   decoration: const InputDecoration(
+                                //       labelText: "Digite o numero de séries"),
+                                //   keyboardType: TextInputType.number,
+                                //   inputFormatters: [
+                                //     LengthLimitingTextInputFormatter(1),
+                                //   ],
+                                // ),
+                                ),
+                            controller.showSeries == true
+                                ? SfCartesianChart(
+                                    //primaryXAxis: Axis,
+                                    title: ChartTitle(text: 'Número por Ano'),
+                                    tooltipBehavior:
+                                        TooltipBehavior(enable: true),
+                                    series: <LineSeries>[
+                                      LineSeries<NumberModel, int>(
+                                          dataSource: controller.modelList,
+                                          xValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  valor.year,
+                                          yValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  valor.number * 3),
+                                      LineSeries<NumberModel, int>(
+                                          dataSource: controller.modelList,
+                                          xValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  valor.year,
+                                          yValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  valor.number * 5 + 67),
+                                      LineSeries<NumberModel, int>(
+                                          dataSource: controller.modelList,
+                                          xValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  ((valor.year -
+                                                          rng.nextInt(5) +
+                                                          rng.nextInt(5))
+                                                      .round()),
+                                          yValueMapper:
+                                              (NumberModel valor, _) =>
+                                                  valor.number / 2),
+                                    ],
+                                  )
+                                : SfCartesianChart(
+                                    //primaryXAxis: Axis,
+                                    title: ChartTitle(text: 'Número por Ano'),
+                                    tooltipBehavior:
+                                        TooltipBehavior(enable: true),
+                                    series: <LineSeries>[
+                                        LineSeries<NumberModel, int>(
+                                            dataSource: controller.modelList,
+                                            xValueMapper:
+                                                (NumberModel valor, _) =>
+                                                    valor.year,
+                                            yValueMapper:
+                                                (NumberModel valor, _) =>
+                                                    valor.number * 3),
+                                      ])
+                            // Text("${controller.modelList[0].number}"),
+                            // const SizedBox(height: 2),
                           ],
                         );
                       },
@@ -90,11 +162,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Observer(
                       builder: (context) {
                         return DataTable2(
-                          columnSpacing: 5,
-                          horizontalMargin: 5,
-                          minWidth: MediaQuery.of(context).size.width,
+                          columnSpacing: 1,
+                          horizontalMargin: 4,
+                          minWidth: MediaQuery.of(context).size.width / 2,
                           columns: const [
-                            DataColumn2(
+                            DataColumn(
                               label: Text('Valor'),
                               // size: ColumnSize.L,
                               numeric: true,
