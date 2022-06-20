@@ -9,10 +9,7 @@ import 'package:mobx_exemplo_grafico/model/number_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:data_table_2/data_table_2.dart';
 
-///Tela principal da aplicação.
-///
-///Mostra um gráfico e um relatório, com a opção de gerar números aleátorios para preenche-los. No gráfico também
-///é possível escolher entre mostrar multiplas séries ou não.
+///Chama [MyHomePage]
 class AndroidApp extends StatelessWidget {
   const AndroidApp({Key? key}) : super(key: key);
 
@@ -29,6 +26,10 @@ class AndroidApp extends StatelessWidget {
   }
 }
 
+///Tela principal da aplicação.
+///
+///Mostra um gráfico e um relatório, com a opção de gerar números aleátorios para preenche-los. No gráfico também
+///é possível escolher entre mostrar multiplas séries ou não.
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
 

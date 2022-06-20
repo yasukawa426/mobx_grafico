@@ -3,9 +3,9 @@ import 'dart:math';
 
 // import 'package:http/http.dart' as http;
 
-///Geradora de números aleatórios
+///Geradora de números aleatórios.
 ///
-///Essa classe é responsável por gerar números aleátorios
+///Essa classe é responsável por gerar números aleátorios.
 class NumberGenerator {
   ///Método estático que gera uma lista populada com números aleátorios.
   ///[amount] é a quantidade de números à serem gerados.\
