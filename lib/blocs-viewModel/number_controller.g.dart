@@ -25,8 +25,35 @@ mixin _$NumberController on NumberControllerBase, Store {
     });
   }
 
+  late final _$showSeriesAtom =
+      Atom(name: 'NumberControllerBase.showSeries', context: context);
+
+  @override
+  bool get showSeries {
+    _$showSeriesAtom.reportRead();
+    return super.showSeries;
+  }
+
+  @override
+  set showSeries(bool value) {
+    _$showSeriesAtom.reportWrite(value, super.showSeries, () {
+      super.showSeries = value;
+    });
+  }
+
   late final _$NumberControllerBaseActionController =
       ActionController(name: 'NumberControllerBase', context: context);
+
+  @override
+  dynamic changeShowSeries(bool value) {
+    final _$actionInfo = _$NumberControllerBaseActionController.startAction(
+        name: 'NumberControllerBase.changeShowSeries');
+    try {
+      return super.changeShowSeries(value);
+    } finally {
+      _$NumberControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void generateNumbers({dynamic amount = 20}) {
@@ -42,7 +69,8 @@ mixin _$NumberController on NumberControllerBase, Store {
   @override
   String toString() {
     return '''
-modelList: ${modelList}
+modelList: ${modelList},
+showSeries: ${showSeries}
     ''';
   }
 }

@@ -12,6 +12,16 @@ abstract class NumberControllerBase with Store {
   @observable
   ObservableList<NumberModel> modelList =
       ObservableList<NumberModel>.of([NumberModel(0, 0)]);
+  ///Define se o gráfico irá mostrar multiplas séries.\
+  ///true: sim. false: não.
+  @observable
+  bool showSeries = false;
+
+  ///Muda o valor de [showSeries] para true ou false.
+  @action
+  changeShowSeries(bool value) {
+    showSeries = value;
+  }
 
   ///Chama a API [NumberGenerator] para gerar um par de lista de números, então, popula a instância da model com ela.\
   ///[amount] se trata da quantidade de números em cada lista, com valor padrão de 20.
@@ -20,13 +30,14 @@ abstract class NumberControllerBase with Store {
     List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
     List<int> randomYears =
         NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
+
     ///ordena a lista
     randomYears.sort();
 
     ///esvazia a lista
     modelList.clear();
 
-    ///preenche ela
+    ///preenche a lista
     for (int i = 0; i < amount; i++) {
       modelList.add(NumberModel(randomNumbers[i], randomYears[i]));
     }
