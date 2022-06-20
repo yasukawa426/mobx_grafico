@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -39,7 +40,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   NumberController controller = NumberController();
-  var rng = Random();
+  Random rng = Random();
+  int seriesQty = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +55,13 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Clique no botão para gerar o seu primeiro conjunto de números. Clique novamente para gerar um novo conjunto.")),
           const SizedBox(height: 5),
           ElevatedButton(
+
               ///Gera os números para preencher os gráficos.
               onPressed: () {
                 // setState(() {
                 //   controller.generateNumbers();
                 // });
-                controller.generateNumbers();
+                controller.generateNumbers(modelQty: seriesQty);
                 controller.changeShowSeries(!controller.showSeries);
                 controller.changeShowSeries(!controller.showSeries);
               },
@@ -78,78 +81,30 @@ class _MyHomePageState extends State<MyHomePage> {
                         return Column(
                           children: [
                             Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, right: 15.0),
-                                child: SwitchListTile(
-                                  title: const Text("Mostrar múltiplas séries"),
-                                  onChanged: (bool value) {
-                                    controller.changeShowSeries(value);
-                                  },
-                                  value: controller.showSeries,
-                                )
-                                // TextField(
-                                //   onSubmitted: (text) {},
-                                //   decoration: const InputDecoration(
-                                //       labelText: "Digite o numero de séries"),
-                                //   keyboardType: TextInputType.number,
-                                //   inputFormatters: [
-                                //     LengthLimitingTextInputFormatter(1),
-                                //   ],
-                                // ),
-                                ),
-                            controller.showSeries == true
-                                ? SfCartesianChart(
-                                    //primaryXAxis: Axis,
-                                    title: ChartTitle(text: 'Número por Ano'),
-                                    tooltipBehavior:
-                                        TooltipBehavior(enable: true),
-                                    series: <LineSeries>[
-                                      LineSeries<NumberModel, int>(
-                                          dataSource: controller.modelList,
-                                          xValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  valor.year,
-                                          yValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  valor.number * 3),
-                                      LineSeries<NumberModel, int>(
-                                          dataSource: controller.modelList,
-                                          xValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  valor.year,
-                                          yValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  valor.number * 5 + 67),
-                                      LineSeries<NumberModel, int>(
-                                          dataSource: controller.modelList,
-                                          xValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  ((valor.year -
-                                                          rng.nextInt(5) +
-                                                          rng.nextInt(5))
-                                                      .round()),
-                                          yValueMapper:
-                                              (NumberModel valor, _) =>
-                                                  valor.number / 2),
-                                    ],
-                                  )
-                                : SfCartesianChart(
-                                    //primaryXAxis: Axis,
-                                    title: ChartTitle(text: 'Número por Ano'),
-                                    tooltipBehavior:
-                                        TooltipBehavior(enable: true),
-                                    series: <LineSeries>[
-                                        LineSeries<NumberModel, int>(
-                                            dataSource: controller.modelList,
-                                            xValueMapper:
-                                                (NumberModel valor, _) =>
-                                                    valor.year,
-                                            yValueMapper:
-                                                (NumberModel valor, _) =>
-                                                    valor.number * 3),
-                                      ])
-                            // Text("${controller.modelList[0].number}"),
-                            // const SizedBox(height: 2),
+                              padding: const EdgeInsets.only(
+                                  left: 15.0, right: 15.0),
+                              child: TextField(
+                                controller: TextEditingController()..text = '1',
+                                onChanged: (text) {
+                                  if (text != "" && text != "0"){
+                                  seriesQty = int.parse(text);
+                                  }
+                                },
+                                decoration: const InputDecoration(
+                                    labelText: "Digite o numero de séries"),
+                                keyboardType: TextInputType.number,
+                                inputFormatters: [
+                                  LengthLimitingTextInputFormatter(1),
+                                ],
+                              ),
+                            ),
+                            SfCartesianChart(
+                                //primaryXAxis: Axis,
+                                title: ChartTitle(text: 'Número por Ano'),
+                                tooltipBehavior: TooltipBehavior(enable: true),
+                                series: <LineSeries>[
+                                  ...getLineSeries(controller.modelList)
+                                ])
                           ],
                         );
                       },
@@ -175,13 +130,20 @@ class _MyHomePageState extends State<MyHomePage> {
                             DataColumn(label: Text('Ano'), numeric: true),
                           ],
                           rows: List<DataRow>.generate(
-                              controller.modelList.length,
-                              (index) => DataRow(cells: [
-                                    DataCell(Text(
-                                        "${controller.modelList[index].number}")),
-                                    DataCell(Text(
-                                        "${controller.modelList[index].year}")),
-                                  ])),
+                            controller.modelList[0].length,
+                            (index) => DataRow(
+                              cells: [
+                                DataCell(
+                                  Text(
+                                      "${controller.modelList[0][index].number}"),
+                                ),
+                                DataCell(
+                                  Text(
+                                      "${controller.modelList[0][index].year}"),
+                                ),
+                              ],
+                            ),
+                          ),
                         );
                       },
                     )),
@@ -191,5 +153,17 @@ class _MyHomePageState extends State<MyHomePage> {
         ]),
       ),
     );
+  }
+
+  List<LineSeries> getLineSeries(List<List<NumberModel>> modelList) {
+    List<LineSeries> list = [];
+
+    for (List<NumberModel> temp in modelList) {
+      list.add(LineSeries<NumberModel, int>(
+          dataSource: temp,
+          xValueMapper: (NumberModel valor, _) => valor.year,
+          yValueMapper: (NumberModel valor, _) => valor.number));
+    }
+    return list;
   }
 }

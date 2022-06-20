@@ -13,13 +13,13 @@ mixin _$NumberController on NumberControllerBase, Store {
       Atom(name: 'NumberControllerBase.modelList', context: context);
 
   @override
-  ObservableList<NumberModel> get modelList {
+  ObservableList<List<NumberModel>> get modelList {
     _$modelListAtom.reportRead();
     return super.modelList;
   }
 
   @override
-  set modelList(ObservableList<NumberModel> value) {
+  set modelList(ObservableList<List<NumberModel>> value) {
     _$modelListAtom.reportWrite(value, super.modelList, () {
       super.modelList = value;
     });
@@ -56,11 +56,11 @@ mixin _$NumberController on NumberControllerBase, Store {
   }
 
   @override
-  void generateNumbers({dynamic amount = 20}) {
+  void generateNumbers({dynamic amount = 20, dynamic modelQty = 3}) {
     final _$actionInfo = _$NumberControllerBaseActionController.startAction(
         name: 'NumberControllerBase.generateNumbers');
     try {
-      return super.generateNumbers(amount: amount);
+      return super.generateNumbers(amount: amount, modelQty: modelQty);
     } finally {
       _$NumberControllerBaseActionController.endAction(_$actionInfo);
     }

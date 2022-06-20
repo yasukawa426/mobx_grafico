@@ -10,8 +10,11 @@ class NumberController = NumberControllerBase with _$NumberController;
 abstract class NumberControllerBase with Store {
   ///Lista Observavel de [NumberModel], utilizada para preencher o gráfico e relatorio. Começa vazia, depois é preenchida com o método [generateNumbers].
   @observable
-  ObservableList<NumberModel> modelList =
-      ObservableList<NumberModel>.of([NumberModel(0, 0)]);
+  ObservableList<List<NumberModel>> modelList = ObservableList<List<NumberModel>>.of([[NumberModel(0,0)]]);
+
+  // ObservableList<NumberModel> modelList =
+  //     ObservableList<NumberModel>.of([NumberModel(0, 0)]);
+
   ///Define se o gráfico irá mostrar multiplas séries.\
   ///true: sim. false: não.
   @observable
@@ -26,20 +29,24 @@ abstract class NumberControllerBase with Store {
   ///Chama a API [NumberGenerator] para gerar um par de lista de números, então, popula a lista [modelList] com várias instâncias de [NumberModel].\
   ///[amount] se trata da quantidade de números em cada lista, com valor padrão de 20.
   @action
-  void generateNumbers({amount = 20}) {
-    List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
-    List<int> randomYears =
-        NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
-
-    ///ordena a lista de anos
-    randomYears.sort();
-
+  void generateNumbers({amount = 20, modelQty = 3}) {
     ///esvazia a lista
     modelList.clear();
+    for (int i = 0; i < modelQty; i++) {
+      List<int> randomNumbers = NumberGenerator.generateNumbers(amount);
+      List<int> randomYears =
+          NumberGenerator.generateNumbers(amount, min: 2000, max: 2030);
 
-    ///preenche a lista
-    for (int i = 0; i < amount; i++) {
-      modelList.add(NumberModel(randomNumbers[i], randomYears[i]));
+      ///ordena a lista de anos
+      randomYears.sort();
+
+      List<NumberModel> iModelList = [];
+
+      ///preenche a lista
+      for (int i = 0; i < amount; i++) {
+        iModelList.add(NumberModel(randomNumbers[i], randomYears[i]));
+      }
+      modelList.add(iModelList);
     }
   }
 }
