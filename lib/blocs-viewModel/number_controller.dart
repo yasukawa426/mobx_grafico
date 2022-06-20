@@ -12,17 +12,6 @@ abstract class NumberControllerBase with Store {
   @observable
   ObservableList<List<NumberModel>> modelList = ObservableList<List<NumberModel>>.of([[NumberModel(0,0)]]);
 
-  ///Define se o gráfico irá mostrar multiplas séries.\
-  ///true: sim. false: não.
-  @observable
-  bool showSeries = false;
-
-  ///Muda o valor de [showSeries] para true ou false.
-  @action
-  changeShowSeries(bool value) {
-    showSeries = value;
-  }
-
   ///Chama a API [NumberGenerator] para gerar um par de lista de números, então, popula a lista [iModelList] com várias instâncias de [NumberModel]. 
   ///Em seguida, popula a lista [modelList] com a lista [iModelList]. \
   ///[amount] se trata da quantidade de números em cada lista, com valor padrão de 20.\
