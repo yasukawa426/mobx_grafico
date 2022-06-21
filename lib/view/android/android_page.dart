@@ -153,7 +153,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
+  ///Pega a matriz [modelList] e cria uma [LineSeries] para cada lista de [NumberModel] dentro dela. Retorna uma lista de [LineSeries]
   List<LineSeries> getLineSeries(List<List<NumberModel>> modelList) {
     List<LineSeries> list = [];
 
