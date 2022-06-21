@@ -39,8 +39,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  ///Instância de controller. Utilizado para chamar todas as operações dos dados.
   NumberController controller = NumberController();
-  Random rng = Random();
+  ///Quantidade de séries, atualizada no [TextField] e utilizado com [controller].
   int seriesQty = 1;
 
   @override
