@@ -63,7 +63,7 @@ abstract class NumberControllerBase with Store {
         tempList.map<DropdownMenuItem<String>>((String value) {
       return DropdownMenuItem<String>(
         value: value,
-        child: Text(value),
+        child: Text("Série $value"),
       );
     }).toList());
   }
