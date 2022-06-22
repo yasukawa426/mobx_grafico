@@ -41,6 +41,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   ///Instância de controller. Utilizado para chamar todas as operações dos dados.
   NumberController controller = NumberController();
+
   ///Quantidade de séries, atualizada no [TextField] e utilizado com [controller].
   int seriesQty = 1;
 
@@ -85,8 +86,8 @@ class _MyHomePageState extends State<MyHomePage> {
                               child: TextField(
                                 controller: TextEditingController()..text = '1',
                                 onChanged: (text) {
-                                  if (text != "" && text != "0"){
-                                  seriesQty = int.parse(text);
+                                  if (text != "" && text != "0") {
+                                    seriesQty = int.parse(text);
                                   }
                                 },
                                 decoration: const InputDecoration(
@@ -111,38 +112,67 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               StaggeredGridTile.count(
                 crossAxisCellCount: 1,
-                mainAxisCellCount: 1,
+                mainAxisCellCount: 3,
                 child: Card(
                     elevation: 5,
                     child: Observer(
                       builder: (context) {
-                        return DataTable2(
-                          columnSpacing: 1,
-                          horizontalMargin: 4,
-                          minWidth: MediaQuery.of(context).size.width / 2,
-                          columns: const [
-                            DataColumn(
-                              label: Text('Valor'),
-                              // size: ColumnSize.L,
-                              numeric: true,
+                        return StaggeredGrid.count(
+                          crossAxisCount: 1,
+                          mainAxisSpacing: 4,
+                          crossAxisSpacing: 4,
+                          children: [
+                            DropdownButton<String>(
+                                value: controller.dropdownValue.toString(),
+                                hint: const Text(
+                                    "Selecione qual lista deseja vizualizar."),
+                                icon: const Icon(Icons.arrow_downward),
+                                elevation: 16,
+                                style:
+                                    const TextStyle(color: Colors.deepPurple),
+                                underline: Container(
+                                  height: 2,
+                                  color: Colors.deepPurpleAccent,
+                                ),
+                                items: controller.dropDownOptions,
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    controller.dropdownValue = newValue;
+                                  });
+                                }),
+                            StaggeredGridTile.count(
+                              crossAxisCellCount: 1,
+                              mainAxisCellCount: 4,
+                              child: DataTable2(
+                                columnSpacing: 1,
+                                horizontalMargin: 4,
+                                minWidth: MediaQuery.of(context).size.width / 2,
+                                columns: const [
+                                  DataColumn(
+                                    label: Text('Valor'),
+                                    // size: ColumnSize.L,
+                                    numeric: true,
+                                  ),
+                                  DataColumn(label: Text('Ano'), numeric: true),
+                                ],
+                                rows: List<DataRow>.generate(
+                                  controller.modelList[int.parse(controller.dropdownValue ?? "0") - 1].length,
+                                  (index) => DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Text(
+                                            "${controller.modelList[int.parse(controller.dropdownValue ?? "0") - 1][index].number}"),
+                                      ),
+                                      DataCell(
+                                        Text(
+                                            "${controller.modelList[int.parse(controller.dropdownValue ?? "0") - 1][index].year}"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                            DataColumn(label: Text('Ano'), numeric: true),
                           ],
-                          rows: List<DataRow>.generate(
-                            controller.modelList[0].length,
-                            (index) => DataRow(
-                              cells: [
-                                DataCell(
-                                  Text(
-                                      "${controller.modelList[0][index].number}"),
-                                ),
-                                DataCell(
-                                  Text(
-                                      "${controller.modelList[0][index].year}"),
-                                ),
-                              ],
-                            ),
-                          ),
                         );
                       },
                     )),
@@ -153,6 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
   ///Pega a matriz [modelList] e cria uma [LineSeries] para cada lista de [NumberModel] dentro dela. Retorna uma lista de [LineSeries]
   List<LineSeries> getLineSeries(List<List<NumberModel>> modelList) {
     List<LineSeries> list = [];
