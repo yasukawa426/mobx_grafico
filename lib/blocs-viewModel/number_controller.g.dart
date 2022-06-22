@@ -25,6 +25,22 @@ mixin _$NumberController on NumberControllerBase, Store {
     });
   }
 
+  late final _$dropDownOptionsAtom =
+      Atom(name: 'NumberControllerBase.dropDownOptions', context: context);
+
+  @override
+  ObservableList<DropdownMenuItem<String>> get dropDownOptions {
+    _$dropDownOptionsAtom.reportRead();
+    return super.dropDownOptions;
+  }
+
+  @override
+  set dropDownOptions(ObservableList<DropdownMenuItem<String>> value) {
+    _$dropDownOptionsAtom.reportWrite(value, super.dropDownOptions, () {
+      super.dropDownOptions = value;
+    });
+  }
+
   late final _$NumberControllerBaseActionController =
       ActionController(name: 'NumberControllerBase', context: context);
 
@@ -42,7 +58,8 @@ mixin _$NumberController on NumberControllerBase, Store {
   @override
   String toString() {
     return '''
-modelList: ${modelList}
+modelList: ${modelList},
+dropDownOptions: ${dropDownOptions}
     ''';
   }
 }
