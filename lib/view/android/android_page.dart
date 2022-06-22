@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-import 'package:mobx_exemplo_grafico/blocs-viewModel/number_controller.dart';
+import 'package:mobx_exemplo_grafico/viewModel/number_controller.dart';
 import 'package:mobx_exemplo_grafico/model/number_model.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 import 'package:data_table_2/data_table_2.dart';
